@@ -6,13 +6,15 @@
     "src/**/*.vue"
   ],
   "compilerOptions": {
+    "outDir": "./built",
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
       ]
     },
-    "allowJs": true
+    "allowJs": true,
+    "noImplicitAny": false
   },
   "references": [
     {

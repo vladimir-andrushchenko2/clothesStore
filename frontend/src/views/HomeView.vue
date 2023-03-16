@@ -1,7 +1,19 @@
-<script setup lang="ts">
+<script setup>
 import CatalogItem from '@/components/CatalogItem.vue'
 import CatalogFilter from '@/components/CatalogFilter.vue'
 import CatalogPagination from '@/components/CatalogPagination.vue'
+
+import { ref } from 'vue'
+
+import api from '@/utils/api'
+
+const items = ref(null)
+
+api.getProducts().then((data) => {
+  items.value = data.map(({ id, title, price, colors }) => {
+    return { id, title, price, colors }
+  })
+})
 </script>
 
 <template>
@@ -17,8 +29,9 @@ import CatalogPagination from '@/components/CatalogPagination.vue'
       <CatalogFilter />
 
       <section class="catalog">
+        <p v-if="!items">Items are loading...</p>
         <ul class="catalog__list">
-          <CatalogItem />
+          <CatalogItem v-for="item in items" :key="item.id" :item="item" />
         </ul>
 
         <CatalogPagination />
