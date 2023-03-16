@@ -1,7 +1,7 @@
 <script setup>
 import { defineEmits, defineProps } from 'vue'
 
-const props = defineProps({
+defineProps({
   colors: { type: Array, required: true },
   currentColorId: { type: Number, required: true },
   itemId: { type: Number, required: true }
