@@ -51,6 +51,14 @@ class Api {
       path,
     }).then(({ items }) => items);
   }
+
+  getProduct(id) {
+    const path = `/products/${id}`;
+
+    return this.makeRequest({
+      path,
+    });
+  }
 }
 
 export default new Api(BASE_URL, {

@@ -1,7 +1,10 @@
 <script setup>
+import { defineProps, ref } from 'vue'
+import { RouterLink } from 'vue-router'
+
 import ColorPalette from './ColorPalette.vue'
 
-import { defineProps, ref, computed } from 'vue'
+import useComputedCurrentImgBasedOnColor from '@/composables/useColorToImageComputed'
 
 const props = defineProps({
   item: {
@@ -13,18 +16,7 @@ const props = defineProps({
 // default color is first one in the array
 const currentColorId = ref(props.item.colors[0].id)
 
-const currentImg = computed(() => {
-  // get currently selected color
-  const color = props.item.colors.find((color) => color.id === currentColorId.value)
-
-  // some colors don't have associated galleries
-  if (color.gallery) {
-    return color.gallery[0].file.url
-  }
-
-  // if selected color has no gallery return first color that has gallery
-  return props.item.colors.find((color) => color.gallery).gallery[0].file.url
-})
+const computedCurrentImg = useComputedCurrentImgBasedOnColor(props.item.colors, currentColorId)
 
 function handleColorChange(colorId) {
   currentColorId.value = colorId
@@ -34,11 +26,11 @@ function handleColorChange(colorId) {
 <template>
   <li class="catalog__item">
     <a class="catalog__pic" href="#">
-      <img :src="currentImg" :alt="item.title" />
+      <img :src="computedCurrentImg" :alt="item.title" />
     </a>
 
     <h3 class="catalog__title">
-      <a href="#">{{ item.title }}</a>
+      <RouterLink :to="`/item/${item.id}`">{{ item.title }}</RouterLink>
     </h3>
 
     <span class="catalog__price"> {{ item.price }} ₽ </span>
