@@ -4,6 +4,7 @@ class Api {
   constructor(baseUrl, headers) {
     this.baseUrl = baseUrl;
     this.headers = headers;
+    this.getAccessKey();
   }
 
   async makeRequest({ path, body, method = 'GET' }) {
@@ -31,6 +32,11 @@ class Api {
   }
 
   getAccessKey() {
+    if (localStorage.getItem('accessKey')) {
+      this.accessKey = localStorage.getItem('accessKey')
+      return { ok: true }
+    }
+
     const path = '/users/accessKey';
 
     return this.makeRequest({
