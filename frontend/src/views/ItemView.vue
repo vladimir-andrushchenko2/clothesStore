@@ -10,7 +10,8 @@ import useFetchItemViewData from '@/composables/useFetchItemViewData'
 const { item, currentColorId, computedCurrentImg } = useFetchItemViewData()
 
 const formState = reactive({
-  amount: 1
+  amount: 1,
+  size: null
 })
 
 function decrement() {
@@ -29,7 +30,25 @@ function handleColorChange(colorId) {
   currentColorId.value = colorId
 }
 
-function handleOrderSubmit() {}
+function handleSizeChange(event) {
+  const { value } = event.target
+
+  if (value === 'none') {
+    formState.size = null
+    return
+  }
+
+  formState.size = value
+}
+
+const isInvalidFormState = computed(() => !formState.size)
+
+function handleOrderSubmit() {
+  console.log(
+    `itemId: ${item.value.id}, colorId: ${currentColorId.value},
+     sizeId: ${formState.size}, amount: ${formState.amount}`
+  )
+}
 </script>
 
 <template>
@@ -103,16 +122,23 @@ function handleOrderSubmit() {}
               <fieldset class="form__block">
                 <legend class="form__legend">Размер</legend>
                 <label class="form__label form__label--small form__label--select">
-                  <select class="form__select" name="category">
-                    <option value="value1">37-39</option>
-                    <option value="value2">40-42</option>
-                    <option value="value3">42-50</option>
+                  <select @change="handleSizeChange" class="form__select" name="category">
+                    <option value="none">Выберите размер</option>
+                    <option v-for="size in item.sizes" :key="size.id" :value="size.id">
+                      {{ size.title }}
+                    </option>
                   </select>
                 </label>
               </fieldset>
             </div>
 
-            <button class="item__button button button--primery" type="submit">В корзину</button>
+            <button
+              class="item__button button button--primery"
+              type="submit"
+              :disabled="isInvalidFormState"
+            >
+              В корзину
+            </button>
           </form>
         </div>
       </div>
