@@ -1,3 +1,5 @@
+import parseItem from '@/helpers/parseItem';
+
 const BASE_URL = 'https://vue-moire.skillbox.cc/api';
 
 class Api {
@@ -55,7 +57,7 @@ class Api {
 
     return this.makeRequest({
       path,
-    }).then(({ items }) => items);
+    }).then(({ items }) => items.map(parseItem));
   }
 
   getProduct(id) {
@@ -63,7 +65,7 @@ class Api {
 
     return this.makeRequest({
       path,
-    });
+    }).then(parseItem);
   }
 }
 

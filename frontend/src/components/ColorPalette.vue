@@ -26,7 +26,7 @@ function onChangeColor(colorId) {
           @change="() => onChangeColor(color.id)"
           :checked="color.id === currentColorId"
         />
-        <span class="colors__value" :style="{ backgroundColor: color.color.code }"> </span>
+        <span class="colors__value" :style="{ backgroundColor: color.code }"> </span>
       </label>
     </li>
   </ul>

@@ -10,9 +10,7 @@ import api from '@/utils/api'
 const items = ref(null)
 
 api.getProducts().then((data) => {
-  items.value = data.map(({ id, title, price, colors }) => {
-    return { id, title, price, colors }
-  })
+  items.value = data
 })
 </script>
 
