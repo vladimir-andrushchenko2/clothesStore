@@ -2,26 +2,12 @@
 import IconPlus from '../components/icons/IconPlus.vue'
 import IconMinus from '../components/icons/IconMinus.vue'
 import ColorPalette from '@/components/ColorPalette.vue'
-import { useRoute, RouterLink } from 'vue-router'
-import { ref, reactive, computed } from 'vue'
+import { RouterLink } from 'vue-router'
+import { reactive, computed } from 'vue'
 
-import api from '@/utils/api'
-import useComputedCurrentImgBasedOnColor from '@/composables/useColorToImageComputed'
+import useFetchItemViewData from '@/composables/useFetchItemViewData'
 
-const route = useRoute()
-
-const item = ref(null)
-
-let currentImg
-// default color is first one in the array
-let currentColorId
-
-api.getProduct(route.params.id).then((product) => {
-  item.value = product
-
-  currentColorId = ref(item.value.colors[0].id)
-  currentImg = useComputedCurrentImgBasedOnColor(item.value.colors, currentColorId)
-})
+const { item, currentColorId, computedCurrentImg } = useFetchItemViewData()
 
 const formState = reactive({
   amount: 1
@@ -65,7 +51,7 @@ function handleOrderSubmit() {}
     <section class="item">
       <div class="item__pics pics">
         <div class="pics__wrapper">
-          <img width="570" height="570" :src="currentImg" :alt="item.title" />
+          <img v-if="item" width="570" height="570" :src="computedCurrentImg" :alt="item.title" />
         </div>
         <ul class="pics__list">
           <!-- <li class="pics__item">

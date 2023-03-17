@@ -1,10 +1,10 @@
 <script setup>
-import { defineProps, ref } from 'vue'
+import { defineProps, ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 
 import ColorPalette from './ColorPalette.vue'
 
-import useComputedCurrentImgBasedOnColor from '@/composables/useColorToImageComputed'
+import getImgOfColor from '@/helpers/getImgColor'
 
 const props = defineProps({
   item: {
@@ -16,7 +16,8 @@ const props = defineProps({
 // default color is first one in the array
 const currentColorId = ref(props.item.colors[0].id)
 
-const computedCurrentImg = useComputedCurrentImgBasedOnColor(props.item.colors, currentColorId)
+// const computedCurrentImg = useComputedCurrentImgBasedOnColor(props.item.colors, currentColorId)
+const computedCurrentImg = computed(() => getImgOfColor(props.item, currentColorId))
 
 function handleColorChange(colorId) {
   currentColorId.value = colorId
