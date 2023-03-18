@@ -1,5 +1,8 @@
 import parseItem from './parseItem'
 
+/**
+ * @returns  basketItemId, price, colorTitle, colorCode, colorId, quantity, item
+ */
 export default function parseCartItem(item) {
   const { id, price, quantity, color, product } = item
   return {

@@ -1,4 +1,5 @@
 import parseItem from '@/helpers/parseItem';
+import parseCartItem from '@/helpers/parseCartItem';
 
 const BASE_URL = 'https://vue-moire.skillbox.cc/api';
 
@@ -72,13 +73,12 @@ class Api {
     return this.accessKeyPromise.then((key) => {
       const path = `/baskets?userAccessKey=${key}`
 
-      return this.makeRequest({ path }).then(res => {
-        return res.items
-      })
+      return this.makeRequest({ path })
+        .then(res => res.items.map(parseCartItem))
     })
   }
 
-  // returns new cart items
+  /** @returns new cart items */
   postCartItem({ productId, colorId, sizeId, quantity }) {
     return this.accessKeyPromise.then((key) => {
       const path = `/baskets/products?userAccessKey=${key}`
@@ -89,9 +89,7 @@ class Api {
         body: {
           productId, colorId, sizeId, quantity
         }
-      }).then(res => {
-        return res.items
-      })
+      }).then(res => res.items.map(parseCartItem))
     })
   }
 }
