@@ -6,7 +6,6 @@ class Api {
   constructor(baseUrl, headers) {
     this.baseUrl = baseUrl;
     this.headers = headers;
-    this.getAccessKey();
   }
 
   async makeRequest({ path, body, method = 'GET' }) {
@@ -33,10 +32,10 @@ class Api {
     localStorage.removeItem('accessKey');
   }
 
-  getAccessKey() {
+  async getAccessKey() {
     if (localStorage.getItem('accessKey')) {
       this.accessKey = localStorage.getItem('accessKey')
-      return { ok: true }
+      return this.accessKey
     }
 
     const path = '/users/accessKey';
@@ -48,7 +47,7 @@ class Api {
 
       localStorage.setItem('accessKey', accessKey);
 
-      return { ok: true };
+      return this.accessKey
     });
   }
 
@@ -66,6 +65,16 @@ class Api {
     return this.makeRequest({
       path,
     }).then(parseItem);
+  }
+
+  getCart() {
+    return this.getAccessKey().then((key) => {
+      const path = `/baskets?userAccessKey=${key}`
+
+      return this.makeRequest({ path }).then(res => {
+        return res.items
+      })
+    })
   }
 }
 
