@@ -1,6 +1,9 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import IconCart from '@/components/icons/IconCart.vue'
+import { useCartStore } from '@/stores/cart'
+
+const store = useCartStore()
 </script>
 
 <template>
@@ -21,7 +24,7 @@ import IconCart from '@/components/icons/IconCart.vue'
 
       <RouterLink class="header__cart" to="/cart" aria-label="Корзина с товарами">
         <IconCart />
-        <span class="header__count" aria-label="Количество товаров">3</span>
+        <span class="header__count" aria-label="Количество товаров">{{ store.getSizeOfCart }}</span>
       </RouterLink>
     </div>
   </header>
