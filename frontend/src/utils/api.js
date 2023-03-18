@@ -6,6 +6,7 @@ class Api {
   constructor(baseUrl, headers) {
     this.baseUrl = baseUrl;
     this.headers = headers;
+    this.accessKeyPromise = this.getAccessKey();
   }
 
   async makeRequest({ path, body, method = 'GET' }) {
@@ -68,10 +69,27 @@ class Api {
   }
 
   getCart() {
-    return this.getAccessKey().then((key) => {
+    return this.accessKeyPromise.then((key) => {
       const path = `/baskets?userAccessKey=${key}`
 
       return this.makeRequest({ path }).then(res => {
+        return res.items
+      })
+    })
+  }
+
+  // returns new cart items
+  postCartItem({ productId, colorId, sizeId, quantity }) {
+    return this.accessKeyPromise.then((key) => {
+      const path = `/baskets/products?userAccessKey=${key}`
+
+      return this.makeRequest({
+        path,
+        method: 'POST',
+        body: {
+          productId, colorId, sizeId, quantity
+        }
+      }).then(res => {
         return res.items
       })
     })

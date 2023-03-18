@@ -6,6 +6,7 @@ import { RouterLink } from 'vue-router'
 import { reactive, computed } from 'vue'
 
 import useFetchItemViewData from '@/composables/useFetchItemViewData'
+import api from '@/utils/api'
 
 const { item, currentColorId, computedCurrentImg } = useFetchItemViewData()
 
@@ -48,6 +49,13 @@ function handleOrderSubmit() {
     `itemId: ${item.value.id}, colorId: ${currentColorId.value},
      sizeId: ${formState.size}, amount: ${formState.amount}`
   )
+
+  api.postCartItem({
+    productId: item.value.id,
+    colorId: currentColorId.value,
+    sizeId: formState.size,
+    quantity: formState.amount
+  })
 }
 </script>
 
