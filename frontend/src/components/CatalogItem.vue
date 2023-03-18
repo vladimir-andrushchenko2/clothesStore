@@ -17,7 +17,7 @@ const props = defineProps({
 const currentColorId = ref(props.item.colors[0].id)
 
 // const computedCurrentImg = useComputedCurrentImgBasedOnColor(props.item.colors, currentColorId)
-const computedCurrentImg = computed(() => getImgOfColor(props.item, currentColorId))
+const computedCurrentImg = computed(() => getImgOfColor(props.item, currentColorId.value))
 
 function handleColorChange(colorId) {
   currentColorId.value = colorId

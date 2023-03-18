@@ -17,7 +17,7 @@ export default function useFetchItemViewData() {
 
   const computedCurrentImg = computed(() => {
     if (item.value) {
-      return getImgOfColor(item.value, currentColorId)
+      return getImgOfColor(item.value, currentColorId.value)
     }
 
     return ''
