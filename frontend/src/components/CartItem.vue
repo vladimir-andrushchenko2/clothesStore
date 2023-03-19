@@ -36,6 +36,6 @@ const props = defineProps({
 
     <b class="product__price"> {{ cartItem.item.price * cartItem.quantity }} ₽ </b>
 
-    <CartItemDeleteBtn />
+    <CartItemDeleteBtn :basket-item-id="props.cartItem.basketItemId" />
   </li>
 </template>

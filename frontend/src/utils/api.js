@@ -107,6 +107,21 @@ class Api {
       }).then(res => res.items.map(parseCartItem))
     })
   }
+
+  /** @returns new cart items */
+  deleteCartItem(basketItemId) {
+    return this.accessKeyPromise.then((key) => {
+      const path = `/baskets/products?userAccessKey=${key}`
+
+      return this.makeRequest({
+        path,
+        method: 'DELETE',
+        body: {
+          basketItemId
+        }
+      }).then(res => res.items.map(parseCartItem))
+    })
+  }
 }
 
 export default new Api(BASE_URL, {
