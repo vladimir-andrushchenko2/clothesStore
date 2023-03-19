@@ -1,6 +1,7 @@
 <script setup>
 import { useCartStore } from '@/stores/cart'
-import { reactive } from 'vue'
+import { reactive, ref, computed } from 'vue'
+import api from '@/utils/api'
 
 const store = useCartStore()
 
@@ -9,13 +10,45 @@ const form = reactive({
   address: '',
   phone: '',
   email: '',
-  deliveryTypeId: 0,
-  paymentTypeId: '',
+  deliveryTypeId: 1,
+  paymentTypeId: 1,
   comment: ''
 })
 
+const error = reactive({
+  name: '',
+  address: '',
+  phone: '',
+  email: '',
+  deliveryTypeId: '',
+  paymentTypeId: ''
+})
+
+const deliveryOptions = ref([])
+const paymentOptions = ref([])
+
+const isSubmitButtonDisabled = ref(false)
+const formHasError = computed(() => {
+  return Object.values(error).find((value) => value !== '')
+})
+
 function handleOrderSubmit() {
-  console.log('lol')
+  isSubmitButtonDisabled.value = true
+
+  api
+    .postOrder(form)
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((res) => {
+      const { request } = res.error
+      Object.entries(request).forEach(([key, value]) => {
+        error[key] = value
+      })
+    })
+    .finally(() => {
+      isSubmitButtonDisabled.value = false
+    })
 }
 </script>
 
@@ -50,8 +83,10 @@ function handleOrderSubmit() {
                 name="name"
                 placeholder="Введите ваше полное имя"
                 v-model.trim.lazy="form.name"
+                @input="error.name = ''"
               />
               <span class="form__value">ФИО</span>
+              <span class="form__error">{{ error.name }}</span>
             </label>
 
             <label class="form__label">
@@ -61,8 +96,10 @@ function handleOrderSubmit() {
                 name="address"
                 placeholder="Введите ваш адрес"
                 v-model.trim.lazy="form.address"
+                @input="error.address = ''"
               />
               <span class="form__value">Адрес доставки</span>
+              <span class="form__error">{{ error.address }}</span>
             </label>
 
             <label class="form__label">
@@ -72,9 +109,10 @@ function handleOrderSubmit() {
                 name="phone"
                 placeholder="Введите ваш телефон"
                 v-model.trim.lazy="form.phone"
+                @input="error.phone = ''"
               />
               <span class="form__value">Телефон</span>
-              <span class="form__error">Неверный формат телефона</span>
+              <span class="form__error">{{ error.phone }}</span>
             </label>
 
             <label class="form__label">
@@ -84,8 +122,10 @@ function handleOrderSubmit() {
                 name="email"
                 placeholder="Введи ваш Email"
                 v-model.trim.lazy="form.email"
+                @input="error.email = ''"
               />
               <span class="form__value">Email</span>
+              <span class="form__error">{{ error.email }}</span>
             </label>
 
             <label class="form__label">
@@ -108,7 +148,7 @@ function handleOrderSubmit() {
                     class="options__radio sr-only"
                     type="radio"
                     name="delivery"
-                    :value="0"
+                    :value="1"
                     checked=""
                     v-model.number="form.deliveryTypeId"
                   />
@@ -121,7 +161,7 @@ function handleOrderSubmit() {
                     class="options__radio sr-only"
                     type="radio"
                     name="delivery"
-                    :value="500"
+                    :value="2"
                     v-model.number="form.deliveryTypeId"
                   />
                   <span class="options__value"> Курьером <b>290 ₽</b> </span>
@@ -137,9 +177,9 @@ function handleOrderSubmit() {
                     class="options__radio sr-only"
                     type="radio"
                     name="pay"
-                    value="card"
+                    :value="1"
                     checked=""
-                    v-model="form.paymentTypeId"
+                    v-model.number="form.paymentTypeId"
                   />
                   <span class="options__value"> Картой при получении </span>
                 </label>
@@ -150,8 +190,8 @@ function handleOrderSubmit() {
                     class="options__radio sr-only"
                     type="radio"
                     name="pay"
-                    value="cash"
-                    v-model="form.paymentTypeId"
+                    :value="2"
+                    v-model.number="form.paymentTypeId"
                   />
                   <span class="options__value"> Наличными при получении </span>
                 </label>
@@ -163,8 +203,8 @@ function handleOrderSubmit() {
         <div class="cart__block">
           <ul class="cart__orders">
             <li v-for="item in store.items" :key="item.item.id" class="cart__order">
-              <h3>{{ item.item.title }}</h3>
-              <b>{{ item.item.price }} ₽</b>
+              <h3>{{ item.item.title }} ({{ item.quantity }})</h3>
+              <b>{{ item.item.price * item.quantity }} ₽</b>
               <span>Артикул: {{ item.item.id }}</span>
             </li>
           </ul>
@@ -176,11 +216,18 @@ function handleOrderSubmit() {
             </p>
           </div>
 
-          <input class="cart__button button button--primery" type="submit" value="Оформить заказ" />
+          <input
+            class="cart__button button button--primery"
+            type="submit"
+            value="Оформить заказ"
+            :disabled="isSubmitButtonDisabled || formHasError"
+          />
         </div>
-        <div class="cart__error form__error-block">
+        <div v-if="formHasError" class="cart__error form__error-block">
           <h4>Заявка не отправлена!</h4>
           <p>Похоже произошла ошибка. Попробуйте отправить снова или перезагрузите страницу.</p>
+          <p>{{ error.deliveryTypeId }}</p>
+          <p>{{ error.paymentTypeId }}</p>
         </div>
       </form>
     </section>

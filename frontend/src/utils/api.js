@@ -10,19 +10,19 @@ class Api {
     this.accessKeyPromise = this.getAccessKey();
   }
 
-  makeRequest({ path, body, method = 'GET' }) {
+  async makeRequest({ path, body, method = 'GET' }) {
     const config = {
       headers: this.headers,
       method,
       body: JSON.stringify(body),
     };
 
-    return fetch(`${this.baseUrl}${path}`, config).then(res => {
+    return fetch(`${this.baseUrl}${path}`, config).then(async res => {
       if (res.ok) {
         return res.json();
       }
 
-      return Promise.reject(res.json());
+      return Promise.reject(await res.json());
     })
   }
 
