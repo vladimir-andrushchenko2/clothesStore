@@ -154,6 +154,30 @@ class Api {
       return this.makeRequest({ path }).then(parseOrder)
     })
   }
+
+  getMaterials() {
+    const path = '/materials'
+
+    this.makeRequest({ path }).then(res => res.items)
+  }
+
+  getColors() {
+    const path = '/colors'
+
+    this.makeRequest({ path }).then(res => res.items)
+  }
+
+  getProductCategories() {
+    const path = '/productCategories'
+
+    this.makeRequest({ path }).then(res => res.items)
+  }
+
+  getSeasons() {
+    const path = '/seasons'
+
+    this.makeRequest({ path }).then(res => res.items)
+  }
 }
 
 export default new Api(BASE_URL, {
