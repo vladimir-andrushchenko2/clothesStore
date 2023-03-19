@@ -17,6 +17,10 @@ export const useCartStore = defineStore('cart', () => {
     state.value = items
   }
 
-  return { sizeOfCart, items, setItems, totalPrice }
+  function clearCart() {
+    state.value = []
+  }
+
+  return { sizeOfCart, items, setItems, totalPrice, clearCart }
 })
 

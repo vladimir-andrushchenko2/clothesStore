@@ -60,6 +60,7 @@ function handleOrderSubmit() {
     .postOrder(form)
     .then((res) => {
       router.push(`/confirmation/${res.id}`)
+      store.clearCart()
     })
     .catch((res) => {
       const { request } = res.error
@@ -198,20 +199,6 @@ function handleOrderSubmit() {
         </div>
 
         <div class="cart__block">
-          <!-- <ul class="cart__orders">
-            <li v-for="item in store.items" :key="item.item.id" class="cart__order">
-              <h3>{{ item.item.title }} ({{ item.quantity }})</h3>
-              <b>{{ item.item.price * item.quantity }} ₽</b>
-              <span>Артикул: {{ item.item.id }}</span>
-            </li>
-          </ul>
-
-          <div class="cart__total">
-            <p>Доставка: <b>бесплатно</b></p>
-            <p>
-              Итого: <b>{{ store.sizeOfCart }}</b> товара на сумму <b>{{ store.totalPrice }} ₽</b>
-            </p>
-          </div> -->
           <OrderInfo
             :items="store.items"
             :size-of-cart="store.sizeOfCart"
