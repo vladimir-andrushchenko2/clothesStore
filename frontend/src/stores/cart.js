@@ -9,10 +9,16 @@ export const useCartStore = defineStore('cart', () => {
 
   const items = computed(() => state.value)
 
+  const totalPrice = computed(() => {
+    return state.value
+      .map((item) => item.quantity * item.item.price)
+      .reduce((prev, curr) => prev + curr, 0)
+  })
+
   function setItems(items) {
     state.value = items
   }
 
-  return { sizeOfCart, items, setItems }
+  return { sizeOfCart, items, setItems, totalPrice }
 })
 
