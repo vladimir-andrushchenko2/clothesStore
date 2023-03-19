@@ -13,5 +13,9 @@ export default function useItemCounter() {
     itemCounter.value++
   }
 
-  return { itemCounter, decrementItemCounter, incrementItemCounter }
+  function setItemCounter(value) {
+    itemCounter.value = value
+  }
+
+  return { itemCounter, decrementItemCounter, incrementItemCounter, setItemCounter }
 }

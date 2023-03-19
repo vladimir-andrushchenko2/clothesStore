@@ -1,6 +1,5 @@
 <script setup>
-import IconPlus from '../components/icons/IconPlus.vue'
-import IconMinus from '../components/icons/IconMinus.vue'
+import CartItemQuantity from '@/components/CartItemQuantity.vue'
 import IconClose from '@/components/icons/IconClose.vue'
 import { defineProps } from 'vue'
 import getImgOfColor from '@/helpers/getImgColor'
@@ -33,7 +32,7 @@ defineProps({
     </p>
     <span class="product__code"> Артикул: {{ cartItem.item.id }} </span>
 
-    <div class="product__counter form__counter">
+    <!-- <div class="product__counter form__counter">
       <button type="button" aria-label="Убрать один товар">
         <IconMinus />
       </button>
@@ -43,7 +42,9 @@ defineProps({
       <button type="button" aria-label="Добавить один товар">
         <IconPlus />
       </button>
-    </div>
+    </div> -->
+
+    <CartItemQuantity :quantity="cartItem.quantity" />
 
     <b class="product__price"> {{ cartItem.price }} ₽ </b>
 
