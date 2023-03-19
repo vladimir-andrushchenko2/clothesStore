@@ -2,6 +2,8 @@
 import { useCartStore } from '@/stores/cart'
 import { reactive, ref, computed, watch } from 'vue'
 import api from '@/utils/api'
+import router from '@/router'
+import OrderInfo from '@/components/OrderInfo.vue'
 
 const store = useCartStore()
 
@@ -32,6 +34,10 @@ api.getDeliveryOptions().then((options) => {
   form.deliveryTypeId = deliveryOptions.value.at(0).id
 })
 
+const deliveryPrice = computed(() => {
+  return Number(deliveryOptions.value.find((option) => option.id === form.deliveryTypeId)?.price)
+})
+
 watch(
   () => form.deliveryTypeId,
   () => {
@@ -53,7 +59,7 @@ function handleOrderSubmit() {
   api
     .postOrder(form)
     .then((res) => {
-      console.log(res)
+      router.push(`/confirmation/${res.id}`)
     })
     .catch((res) => {
       const { request } = res.error
@@ -192,7 +198,7 @@ function handleOrderSubmit() {
         </div>
 
         <div class="cart__block">
-          <ul class="cart__orders">
+          <!-- <ul class="cart__orders">
             <li v-for="item in store.items" :key="item.item.id" class="cart__order">
               <h3>{{ item.item.title }} ({{ item.quantity }})</h3>
               <b>{{ item.item.price * item.quantity }} ₽</b>
@@ -205,7 +211,13 @@ function handleOrderSubmit() {
             <p>
               Итого: <b>{{ store.sizeOfCart }}</b> товара на сумму <b>{{ store.totalPrice }} ₽</b>
             </p>
-          </div>
+          </div> -->
+          <OrderInfo
+            :items="store.items"
+            :size-of-cart="store.sizeOfCart"
+            :total-price="store.totalPrice"
+            :delivery-price="deliveryPrice"
+          />
 
           <input
             class="cart__button button button--primery"

@@ -1,5 +1,6 @@
 import parseItem from '@/helpers/parseItem';
 import parseCartItem from '@/helpers/parseCartItem';
+import parseOrder from '@/helpers/parseOrder';
 
 const BASE_URL = 'https://vue-moire.skillbox.cc/api';
 
@@ -144,6 +145,14 @@ class Api {
     const path = `/payments?deliveryTypeId=${deliveryTypeId}`
 
     return this.makeRequest({ path })
+  }
+
+  getOrderConfirmation(orderId) {
+    return this.accessKeyPromise.then((key) => {
+      const path = `/orders/${orderId}?userAccessKey=${key}`
+
+      return this.makeRequest({ path }).then(parseOrder)
+    })
   }
 }
 
