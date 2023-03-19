@@ -34,7 +34,7 @@ const props = defineProps({
 
     <CartItemQuantity :quantity="cartItem.quantity" :basket-item-id="props.cartItem.basketItemId" />
 
-    <b class="product__price"> {{ cartItem.price }} ₽ </b>
+    <b class="product__price"> {{ cartItem.item.price * cartItem.quantity }} ₽ </b>
 
     <button class="product__del button-del" type="button" aria-label="Удалить товар из корзины">
       <IconClose />
