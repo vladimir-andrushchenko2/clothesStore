@@ -1,12 +1,14 @@
 <script setup>
-import IconPlus from '../components/icons/IconPlus.vue'
-import IconMinus from '../components/icons/IconMinus.vue'
+import IconPlus from '@/components/icons/IconPlus.vue'
+import IconMinus from '@/components/icons/IconMinus.vue'
 import ColorPalette from '@/components/ColorPalette.vue'
 import { RouterLink } from 'vue-router'
 import { reactive, computed } from 'vue'
-
 import useFetchItemViewData from '@/composables/useFetchItemViewData'
+import { useCartStore } from '@/stores/cart'
 import api from '@/utils/api'
+
+const store = useCartStore()
 
 const { item, currentColorId, computedCurrentImg } = useFetchItemViewData()
 
@@ -45,17 +47,16 @@ function handleSizeChange(event) {
 const isInvalidFormState = computed(() => !formState.size)
 
 function handleOrderSubmit() {
-  console.log(
-    `itemId: ${item.value.id}, colorId: ${currentColorId.value},
-     sizeId: ${formState.size}, amount: ${formState.amount}`
-  )
-
-  api.postCartItem({
-    productId: item.value.id,
-    colorId: currentColorId.value,
-    sizeId: formState.size,
-    quantity: formState.amount
-  })
+  api
+    .postCartItem({
+      productId: item.value.id,
+      colorId: currentColorId.value,
+      sizeId: formState.size,
+      quantity: formState.amount
+    })
+    .then((items) => {
+      store.setItems(items)
+    })
 }
 </script>
 

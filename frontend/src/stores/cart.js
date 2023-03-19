@@ -5,14 +5,14 @@ import { defineStore } from 'pinia'
 export const useCartStore = defineStore('cart', () => {
   const state = ref([])
 
-  const getSizeOfCart = computed(() => state.value.length)
+  const sizeOfCart = computed(() => state.value.length)
 
-  const getItems = computed(() => state.value)
+  const items = computed(() => state.value)
 
   function setItems(items) {
     state.value = items
   }
 
-  return { state, getSizeOfCart, getItems, setItems }
+  return { sizeOfCart, items, setItems }
 })
 

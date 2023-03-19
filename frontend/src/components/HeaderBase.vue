@@ -24,7 +24,7 @@ const store = useCartStore()
 
       <RouterLink class="header__cart" to="/cart" aria-label="Корзина с товарами">
         <IconCart />
-        <span class="header__count" aria-label="Количество товаров">{{ store.getSizeOfCart }}</span>
+        <span class="header__count" aria-label="Количество товаров">{{ store.sizeOfCart }}</span>
       </RouterLink>
     </div>
   </header>
