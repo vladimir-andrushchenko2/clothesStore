@@ -1,6 +1,6 @@
 <script setup>
 import { useCartStore } from '@/stores/cart'
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, watch } from 'vue'
 import api from '@/utils/api'
 
 const store = useCartStore()
@@ -10,8 +10,8 @@ const form = reactive({
   address: '',
   phone: '',
   email: '',
-  deliveryTypeId: 1,
-  paymentTypeId: 1,
+  deliveryTypeId: null,
+  paymentTypeId: null,
   comment: ''
 })
 
@@ -26,6 +26,21 @@ const error = reactive({
 
 const deliveryOptions = ref([])
 const paymentOptions = ref([])
+
+api.getDeliveryOptions().then((options) => {
+  deliveryOptions.value = options
+  form.deliveryTypeId = deliveryOptions.value.at(0).id
+})
+
+watch(
+  () => form.deliveryTypeId,
+  () => {
+    api.getPaymentOptions(form.deliveryTypeId).then((options) => {
+      paymentOptions.value = options
+      form.paymentTypeId = paymentOptions.value.at(0).id
+    })
+  }
+)
 
 const isSubmitButtonDisabled = ref(false)
 const formHasError = computed(() => {
@@ -142,58 +157,34 @@ function handleOrderSubmit() {
           <div class="cart__options">
             <h3 class="cart__title">Доставка</h3>
             <ul class="cart__options options">
-              <li class="options__item">
+              <li class="options__item" v-for="delivery in deliveryOptions" :key="delivery.id">
                 <label class="options__label">
                   <input
                     class="options__radio sr-only"
                     type="radio"
                     name="delivery"
-                    :value="1"
-                    checked=""
+                    :value="delivery.id"
                     v-model.number="form.deliveryTypeId"
                   />
-                  <span class="options__value"> Самовывоз <b>бесплатно</b> </span>
-                </label>
-              </li>
-              <li class="options__item">
-                <label class="options__label">
-                  <input
-                    class="options__radio sr-only"
-                    type="radio"
-                    name="delivery"
-                    :value="2"
-                    v-model.number="form.deliveryTypeId"
-                  />
-                  <span class="options__value"> Курьером <b>290 ₽</b> </span>
+                  <span class="options__value">
+                    {{ delivery.title }} <b>{{ delivery.price }}</b>
+                  </span>
                 </label>
               </li>
             </ul>
 
             <h3 class="cart__title">Оплата</h3>
             <ul class="cart__options options">
-              <li class="options__item">
+              <li class="options__item" v-for="payment in paymentOptions" :key="payment.id">
                 <label class="options__label">
                   <input
                     class="options__radio sr-only"
                     type="radio"
                     name="pay"
-                    :value="1"
-                    checked=""
+                    :value="payment.id"
                     v-model.number="form.paymentTypeId"
                   />
-                  <span class="options__value"> Картой при получении </span>
-                </label>
-              </li>
-              <li class="options__item">
-                <label class="options__label">
-                  <input
-                    class="options__radio sr-only"
-                    type="radio"
-                    name="pay"
-                    :value="2"
-                    v-model.number="form.paymentTypeId"
-                  />
-                  <span class="options__value"> Наличными при получении </span>
+                  <span class="options__value"> {{ payment.title }} </span>
                 </label>
               </li>
             </ul>
@@ -220,7 +211,7 @@ function handleOrderSubmit() {
             class="cart__button button button--primery"
             type="submit"
             value="Оформить заказ"
-            :disabled="isSubmitButtonDisabled || formHasError"
+            :disabled="isSubmitButtonDisabled || formHasError || store.sizeOfCart === 0"
           />
         </div>
         <div v-if="formHasError" class="cart__error form__error-block">

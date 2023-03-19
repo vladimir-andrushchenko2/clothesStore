@@ -133,6 +133,18 @@ class Api {
       })
     })
   }
+
+  getDeliveryOptions() {
+    const path = '/deliveries'
+
+    return this.makeRequest({ path })
+  }
+
+  getPaymentOptions(deliveryTypeId) {
+    const path = `/payments?deliveryTypeId=${deliveryTypeId}`
+
+    return this.makeRequest({ path })
+  }
 }
 
 export default new Api(BASE_URL, {
