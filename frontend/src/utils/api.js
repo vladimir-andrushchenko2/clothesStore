@@ -10,23 +10,20 @@ class Api {
     this.accessKeyPromise = this.getAccessKey();
   }
 
-  async makeRequest({ path, body, method = 'GET' }) {
+  makeRequest({ path, body, method = 'GET' }) {
     const config = {
       headers: this.headers,
       method,
       body: JSON.stringify(body),
     };
 
-    const res = await fetch(`${this.baseUrl}${path}`, config);
+    return fetch(`${this.baseUrl}${path}`, config).then(res => {
+      if (res.ok) {
+        return res.json();
+      }
 
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(
-      new Error(`promise rejected with status ${res.status}
-      ${this.baseUrl}${path}`)
-    );
+      return Promise.reject(res.json());
+    })
   }
 
   deleteAccessKey() {
@@ -120,6 +117,20 @@ class Api {
           basketItemId
         }
       }).then(res => res.items.map(parseCartItem))
+    })
+  }
+
+  postOrder({ name, address, phone, email, deliveryTypeId, paymentTypeId, comment }) {
+    return this.accessKeyPromise.then((key) => {
+      const path = `/orders?userAccessKey=${key}`
+
+      return this.makeRequest({
+        path,
+        method: 'POST',
+        body: {
+          name, address, phone, email, deliveryTypeId, paymentTypeId, comment
+        }
+      })
     })
   }
 }

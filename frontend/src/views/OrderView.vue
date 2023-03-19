@@ -1,7 +1,18 @@
 <script setup>
 import { useCartStore } from '@/stores/cart'
+import { reactive } from 'vue'
 
 const store = useCartStore()
+
+const form = reactive({
+  name: '',
+  address: '',
+  phone: '',
+  email: '',
+  deliveryTypeId: 0,
+  paymentTypeId: '',
+  comment: ''
+})
 
 function handleOrderSubmit() {
   console.log('lol')
@@ -38,6 +49,7 @@ function handleOrderSubmit() {
                 type="text"
                 name="name"
                 placeholder="Введите ваше полное имя"
+                v-model.trim.lazy="form.name"
               />
               <span class="form__value">ФИО</span>
             </label>
@@ -48,6 +60,7 @@ function handleOrderSubmit() {
                 type="text"
                 name="address"
                 placeholder="Введите ваш адрес"
+                v-model.trim.lazy="form.address"
               />
               <span class="form__value">Адрес доставки</span>
             </label>
@@ -58,13 +71,20 @@ function handleOrderSubmit() {
                 type="tel"
                 name="phone"
                 placeholder="Введите ваш телефон"
+                v-model.trim.lazy="form.phone"
               />
               <span class="form__value">Телефон</span>
               <span class="form__error">Неверный формат телефона</span>
             </label>
 
             <label class="form__label">
-              <input class="form__input" type="email" name="email" placeholder="Введи ваш Email" />
+              <input
+                class="form__input"
+                type="email"
+                name="email"
+                placeholder="Введи ваш Email"
+                v-model.trim.lazy="form.email"
+              />
               <span class="form__value">Email</span>
             </label>
 
@@ -73,6 +93,7 @@ function handleOrderSubmit() {
                 class="form__input form__input--area"
                 name="comments"
                 placeholder="Ваши пожелания"
+                v-model.trim.lazy="form.comment"
               ></textarea>
               <span class="form__value">Комментарий к заказу</span>
             </label>
@@ -87,15 +108,22 @@ function handleOrderSubmit() {
                     class="options__radio sr-only"
                     type="radio"
                     name="delivery"
-                    value="0"
+                    :value="0"
                     checked=""
+                    v-model.number="form.deliveryTypeId"
                   />
                   <span class="options__value"> Самовывоз <b>бесплатно</b> </span>
                 </label>
               </li>
               <li class="options__item">
                 <label class="options__label">
-                  <input class="options__radio sr-only" type="radio" name="delivery" value="500" />
+                  <input
+                    class="options__radio sr-only"
+                    type="radio"
+                    name="delivery"
+                    :value="500"
+                    v-model.number="form.deliveryTypeId"
+                  />
                   <span class="options__value"> Курьером <b>290 ₽</b> </span>
                 </label>
               </li>
@@ -111,13 +139,20 @@ function handleOrderSubmit() {
                     name="pay"
                     value="card"
                     checked=""
+                    v-model="form.paymentTypeId"
                   />
                   <span class="options__value"> Картой при получении </span>
                 </label>
               </li>
               <li class="options__item">
                 <label class="options__label">
-                  <input class="options__radio sr-only" type="radio" name="pay" value="cash" />
+                  <input
+                    class="options__radio sr-only"
+                    type="radio"
+                    name="pay"
+                    value="cash"
+                    v-model="form.paymentTypeId"
+                  />
                   <span class="options__value"> Наличными при получении </span>
                 </label>
               </li>
