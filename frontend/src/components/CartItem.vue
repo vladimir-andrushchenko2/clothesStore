@@ -1,6 +1,6 @@
 <script setup>
 import CartItemQuantity from '@/components/CartItemQuantity.vue'
-import IconClose from '@/components/icons/IconClose.vue'
+import CartItemDeleteBtn from '@/components/CartItemDeleteBtn.vue'
 import { defineProps } from 'vue'
 import getImgOfColor from '@/helpers/getImgColor'
 
@@ -36,8 +36,6 @@ const props = defineProps({
 
     <b class="product__price"> {{ cartItem.item.price * cartItem.quantity }} ₽ </b>
 
-    <button class="product__del button-del" type="button" aria-label="Удалить товар из корзины">
-      <IconClose />
-    </button>
+    <CartItemDeleteBtn />
   </li>
 </template>
