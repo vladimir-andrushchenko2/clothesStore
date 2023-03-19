@@ -3,56 +3,40 @@ import IconPlus from '@/components/icons/IconPlus.vue'
 import IconMinus from '@/components/icons/IconMinus.vue'
 import ColorPalette from '@/components/ColorPalette.vue'
 import { RouterLink } from 'vue-router'
-import { reactive, computed } from 'vue'
+import { computed } from 'vue'
 import useFetchItemViewData from '@/composables/useFetchItemViewData'
 import { useCartStore } from '@/stores/cart'
 import api from '@/utils/api'
+import useItemCounter from '@/composables/useItemCounter'
+import useItemSize from '@/composables/useItemSize'
 
 const store = useCartStore()
 
 const { item, currentColorId, computedCurrentImg } = useFetchItemViewData()
 
-const formState = reactive({
-  amount: 1,
-  size: null
-})
+const { itemCounter, decrementItemCounter, incrementItemCounter } = useItemCounter()
 
-function decrement() {
-  if (formState.amount > 1) {
-    formState.amount--
-  }
-}
+const { sizeOfItem, setSizeOfItem } = useItemSize()
 
-function increment() {
-  formState.amount++
-}
+const computedPrice = computed(() => item.value.price * itemCounter.value)
 
-const computedPrice = computed(() => item.value.price * formState.amount)
+const isInvalidFormState = computed(() => !sizeOfItem.value)
 
 function handleColorChange(colorId) {
   currentColorId.value = colorId
 }
 
 function handleSizeChange(event) {
-  const { value } = event.target
-
-  if (value === 'none') {
-    formState.size = null
-    return
-  }
-
-  formState.size = value
+  setSizeOfItem(event.target.value)
 }
-
-const isInvalidFormState = computed(() => !formState.size)
 
 function handleOrderSubmit() {
   api
     .postCartItem({
       productId: item.value.id,
       colorId: currentColorId.value,
-      sizeId: formState.size,
-      quantity: formState.amount
+      sizeId: sizeOfItem.value,
+      quantity: itemCounter.value
     })
     .then((items) => {
       store.setItems(items)
@@ -103,13 +87,17 @@ function handleOrderSubmit() {
           <form class="form" @submit.prevent="handleOrderSubmit">
             <div class="item__row item__row--center">
               <div class="form__counter">
-                <button @click="decrement" type="button" aria-label="Убрать один товар">
+                <button @click="decrementItemCounter" type="button" aria-label="Убрать один товар">
                   <IconMinus />
                 </button>
 
-                <input type="text" :value="formState.amount" name="count" />
+                <input type="text" :value="itemCounter" name="count" />
 
-                <button @click="increment" type="button" aria-label="Добавить один товар">
+                <button
+                  @click="incrementItemCounter"
+                  type="button"
+                  aria-label="Добавить один товар"
+                >
                   <IconPlus />
                 </button>
               </div>
