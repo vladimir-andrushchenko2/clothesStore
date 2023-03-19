@@ -1,4 +1,12 @@
-<script setup></script>
+<script setup>
+import { useCartStore } from '@/stores/cart'
+
+const store = useCartStore()
+
+function handleOrderSubmit() {
+  console.log('lol')
+}
+</script>
 
 <template>
   <main class="content container">
@@ -21,7 +29,7 @@
     </div>
 
     <section class="cart">
-      <form class="cart__form form" @submit.prevent="">
+      <form class="cart__form form" @submit.prevent="handleOrderSubmit">
         <div class="cart__field">
           <div class="cart__data">
             <label class="form__label">
@@ -119,29 +127,21 @@
 
         <div class="cart__block">
           <ul class="cart__orders">
-            <li class="cart__order">
-              <h3>Смартфон Xiaomi Redmi Note 7 Pro 6/128GB</h3>
-              <b>990 ₽</b>
-              <span>Артикул: 150030</span>
-            </li>
-            <li class="cart__order">
-              <h3>Гироскутер Razor Hovertrax 2.0ii</h3>
-              <b>1 990 ₽</b>
-              <span>Артикул: 150030</span>
-            </li>
-            <li class="cart__order">
-              <h3>Электрический дрифт-карт Razor Lil’ Crazy</h3>
-              <b>4 090 ₽</b>
-              <span>Артикул: 150030</span>
+            <li v-for="item in store.items" :key="item.item.id" class="cart__order">
+              <h3>{{ item.item.title }}</h3>
+              <b>{{ item.item.price }} ₽</b>
+              <span>Артикул: {{ item.item.id }}</span>
             </li>
           </ul>
 
           <div class="cart__total">
             <p>Доставка: <b>бесплатно</b></p>
-            <p>Итого: <b>3</b> товара на сумму <b>4 070 ₽</b></p>
+            <p>
+              Итого: <b>{{ store.sizeOfCart }}</b> товара на сумму <b>{{ store.totalPrice }} ₽</b>
+            </p>
           </div>
 
-          <button class="cart__button button button--primery" type="submit">Оформить заказ</button>
+          <input class="cart__button button button--primery" type="submit" value="Оформить заказ" />
         </div>
         <div class="cart__error form__error-block">
           <h4>Заявка не отправлена!</h4>

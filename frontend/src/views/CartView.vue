@@ -1,8 +1,13 @@
 <script setup>
 import CartItem from '@/components/CartItem.vue'
 import { useCartStore } from '@/stores/cart'
+import router from '@/router'
 
 const store = useCartStore()
+
+function handleOrderBtnClick() {
+  router.push('/order')
+}
 </script>
 
 <template>
@@ -42,7 +47,12 @@ const store = useCartStore()
               Итого: <span>{{ store.totalPrice }} ₽</span>
             </p>
 
-            <button class="cart__button button button--primery" type="submit">
+            <button
+              class="cart__button button button--primery"
+              type="submit"
+              :disabled="store.sizeOfCart === 0"
+              @click="handleOrderBtnClick"
+            >
               Оформить заказ
             </button>
           </div>
