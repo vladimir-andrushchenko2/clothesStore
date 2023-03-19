@@ -25,7 +25,7 @@ const store = useCartStore()
       </div>
 
       <section class="cart">
-        <form class="cart__form form" action="#" method="POST">
+        <form class="cart__form form" @submit.prevent="">
           <div class="cart__field">
             <ul class="cart__list">
               <CartItem

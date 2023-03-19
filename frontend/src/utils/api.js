@@ -92,6 +92,21 @@ class Api {
       }).then(res => res.items.map(parseCartItem))
     })
   }
+
+  /** @returns new cart items */
+  putCartItemQuantity({ basketItemId, quantity }) {
+    return this.accessKeyPromise.then((key) => {
+      const path = `/baskets/products?userAccessKey=${key}`
+
+      return this.makeRequest({
+        path,
+        method: 'PUT',
+        body: {
+          quantity, basketItemId
+        }
+      }).then(res => res.items.map(parseCartItem))
+    })
+  }
 }
 
 export default new Api(BASE_URL, {

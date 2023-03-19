@@ -4,7 +4,7 @@ import IconClose from '@/components/icons/IconClose.vue'
 import { defineProps } from 'vue'
 import getImgOfColor from '@/helpers/getImgColor'
 
-defineProps({
+const props = defineProps({
   cartItem: {
     type: Object,
     required: true
@@ -32,19 +32,7 @@ defineProps({
     </p>
     <span class="product__code"> Артикул: {{ cartItem.item.id }} </span>
 
-    <!-- <div class="product__counter form__counter">
-      <button type="button" aria-label="Убрать один товар">
-        <IconMinus />
-      </button>
-
-      <input type="text" :value="cartItem.quantity" name="count" />
-
-      <button type="button" aria-label="Добавить один товар">
-        <IconPlus />
-      </button>
-    </div> -->
-
-    <CartItemQuantity :quantity="cartItem.quantity" />
+    <CartItemQuantity :quantity="cartItem.quantity" :basket-item-id="props.cartItem.basketItemId" />
 
     <b class="product__price"> {{ cartItem.price }} ₽ </b>
 

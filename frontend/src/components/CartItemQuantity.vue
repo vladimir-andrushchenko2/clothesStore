@@ -2,10 +2,18 @@
 import IconPlus from '@/components/icons/IconPlus.vue'
 import IconMinus from '@/components/icons/IconMinus.vue'
 import useItemCounter from '@/composables/useItemCounter'
-import { defineProps } from 'vue'
+import { ref, defineProps, watch } from 'vue'
+import api from '@/utils/api'
+import { useCartStore } from '@/stores/cart'
+
+const store = useCartStore()
 
 const props = defineProps({
   quantity: {
+    type: Number,
+    required: true
+  },
+  basketItemId: {
     type: Number,
     required: true
   }
@@ -15,24 +23,51 @@ const { itemCounter, decrementItemCounter, incrementItemCounter, setItemCounter 
 
 setItemCounter(props.quantity)
 
-function handleDecrement() {
-  decrementItemCounter()
-}
+const quantityChangeIsLoading = ref(false)
 
-function handleIncrement() {
-  incrementItemCounter()
+watch(itemCounter, () => {
+  quantityChangeIsLoading.value = true
+
+  api
+    .putCartItemQuantity({
+      basketItemId: props.basketItemId,
+      quantity: itemCounter.value
+    })
+    .then((items) => {
+      quantityChangeIsLoading.value = false
+      store.setItems(items)
+    })
+})
+
+function handleQuantityChange(event) {
+  if (event.target.value === '' || event.target.value === '0') {
+    itemCounter.value = 1
+    return
+  }
+
+  itemCounter.value = Number(event.target.value)
 }
 </script>
 
 <template>
   <div class="product__counter form__counter">
-    <button @click="handleDecrement" type="button" aria-label="Убрать один товар">
+    <button
+      @click="decrementItemCounter"
+      type="button"
+      aria-label="Убрать один товар"
+      :disabled="quantityChangeIsLoading"
+    >
       <IconMinus />
     </button>
 
-    <input type="text" :value="itemCounter" name="count" />
+    <input :value="itemCounter" @change="handleQuantityChange" type="text" name="count" />
 
-    <button @click="handleIncrement" type="button" aria-label="Добавить один товар">
+    <button
+      @click="incrementItemCounter"
+      type="button"
+      aria-label="Добавить один товар"
+      :disabled="quantityChangeIsLoading"
+    >
       <IconPlus />
     </button>
   </div>
