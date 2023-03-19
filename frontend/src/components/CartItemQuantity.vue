@@ -19,7 +19,8 @@ const props = defineProps({
   }
 })
 
-const { itemCounter, decrementItemCounter, incrementItemCounter, setItemCounter } = useItemCounter()
+const { itemCounter, decrementItemCounter, incrementItemCounter, setItemCounter, isMinItemAmount } =
+  useItemCounter()
 
 setItemCounter(props.quantity)
 
@@ -55,12 +56,18 @@ function handleQuantityChange(event) {
       @click="decrementItemCounter"
       type="button"
       aria-label="Убрать один товар"
-      :disabled="quantityChangeIsLoading"
+      :disabled="quantityChangeIsLoading || isMinItemAmount"
     >
       <IconMinus />
     </button>
 
-    <input :value="itemCounter" @change="handleQuantityChange" type="text" name="count" />
+    <input
+      :disabled="quantityChangeIsLoading"
+      :value="itemCounter"
+      @change="handleQuantityChange"
+      type="text"
+      name="count"
+    />
 
     <button
       @click="incrementItemCounter"

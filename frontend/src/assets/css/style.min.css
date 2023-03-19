@@ -403,6 +403,9 @@ a {
   background-color: #222;
   color: #fff;
 }
+.form__counter button:disabled {
+  cursor: not-allowed;
+}
 .form__counter input {
   padding: 23px 5px;
   height: 70px;

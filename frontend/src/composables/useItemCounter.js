@@ -1,7 +1,9 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 export default function useItemCounter() {
   const itemCounter = ref(1)
+
+  const isMinItemAmount = computed(() => itemCounter.value < 2)
 
   function decrementItemCounter() {
     if (itemCounter.value > 1) {
@@ -17,5 +19,11 @@ export default function useItemCounter() {
     itemCounter.value = value
   }
 
-  return { itemCounter, decrementItemCounter, incrementItemCounter, setItemCounter }
+  return {
+    itemCounter,
+    decrementItemCounter,
+    incrementItemCounter,
+    setItemCounter,
+    isMinItemAmount
+  }
 }
