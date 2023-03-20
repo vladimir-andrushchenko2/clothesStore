@@ -7,8 +7,9 @@ const emit = defineEmits(['filter'])
 
 const { categories, materials, seasons } = useFetchFilterData()
 
-const [getSelectedMaterialsIds, selectMaterial] = useSelect()
-const [getSelectedSeasonsIds, selectSeason] = useSelect()
+const [getSelectedMaterialsIds, selectMaterial, isMaterialIdSelected, clearMaterialIds] =
+  useSelect()
+const [getSelectedSeasonsIds, selectSeason, isSeasonIdSelected, clearSeasonIds] = useSelect()
 const categoryId = ref(null)
 const minPrice = ref(null)
 const maxPrice = ref(null)
@@ -21,6 +22,14 @@ function handleSubmit() {
     seasonIds: getSelectedSeasonsIds(),
     categoryId: categoryId.value
   })
+}
+
+function handleClear() {
+  maxPrice.value = null
+  minPrice.value = null
+  categoryId.value = null
+  clearMaterialIds()
+  clearSeasonIds()
 }
 </script>
 
@@ -62,6 +71,7 @@ function handleSubmit() {
                 name="material"
                 :value="material.id"
                 @change="selectMaterial(material.id)"
+                :checked="isMaterialIdSelected(material.id)"
               />
               <span class="check-list__desc">
                 {{ material.title }}
@@ -83,6 +93,7 @@ function handleSubmit() {
                 name="collection"
                 :value="season.id"
                 @change="selectSeason(season.id)"
+                :checked="isSeasonIdSelected(season.id)"
               />
               <span class="check-list__desc">
                 {{ season.title }}
@@ -94,7 +105,9 @@ function handleSubmit() {
       </fieldset>
 
       <button class="filter__submit button button--primery" type="submit">Применить</button>
-      <button class="filter__reset button button--second" type="button">Сбросить</button>
+      <button @click="handleClear" class="filter__reset button button--second" type="button">
+        Сбросить
+      </button>
     </form>
   </aside>
 </template>
