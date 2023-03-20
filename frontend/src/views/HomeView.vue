@@ -23,7 +23,12 @@ function handleFilter(filterObj) {
 }
 
 function handleChangePage(page) {
-  console.log(page)
+  api
+    .getProducts({ filterObj: filter.value, page })
+    .then(({ items: data, pagination: paginationData }) => {
+      items.value = data
+      pagination.value = paginationData
+    })
 }
 </script>
 

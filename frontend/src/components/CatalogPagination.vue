@@ -1,7 +1,6 @@
 <script setup>
 import IconArrowRight from './icons/IconArrowRight.vue'
 import IconArrowLeft from './icons/IconArrowLeft.vue'
-import { ref } from 'vue'
 
 const props = defineProps({
   pagination: {
@@ -9,8 +8,6 @@ const props = defineProps({
     required: true
   }
 })
-
-const currentPage = ref(props.pagination.page)
 
 const emit = defineEmits(['changePage'])
 
@@ -24,8 +21,8 @@ function handlePageClick(page) {
     <li class="pagination__item">
       <a
         class="pagination__link pagination__link--arrow"
-        :class="{ 'pagination__link--disabled': currentPage === 1 }"
-        @click.prevent="handlePageClick(currentPage - 1)"
+        :class="{ 'pagination__link--disabled': pagination.page === 1 }"
+        @click.prevent="handlePageClick(pagination.page - 1)"
         aria-label="Предыдущая страница"
       >
         <IconArrowLeft />
@@ -36,15 +33,16 @@ function handlePageClick(page) {
         @click.prevent="handlePageClick(page)"
         href="#"
         class="pagination__link"
-        :class="{ 'pagination__link--current': page === currentPage }"
+        :class="{ 'pagination__link--current': page === pagination.page }"
       >
         {{ page }}
       </a>
     </li>
     <li class="pagination__item">
       <a
-        @click.prevent="handlePageClick(currentPage + 1)"
+        @click.prevent="handlePageClick(pagination.page + 1)"
         class="pagination__link pagination__link--arrow"
+        :class="{ 'pagination__link--disabled': pagination.page === pagination.pages }"
         href="#"
         aria-label="Следующая страница"
       >
