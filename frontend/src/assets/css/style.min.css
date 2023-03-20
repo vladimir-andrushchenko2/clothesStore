@@ -1017,6 +1017,7 @@ a {
 .pagination__link--disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  pointer-events: none;
 }
 .pagination__link--disabled:focus,
 .pagination__link--disabled:hover {

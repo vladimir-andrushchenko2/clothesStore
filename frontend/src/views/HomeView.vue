@@ -7,6 +7,7 @@ import api from '@/utils/api'
 
 const items = ref(null)
 const pagination = ref(null)
+const filter = ref(null)
 
 api.getProducts().then(({ items: data, pagination: paginationData }) => {
   items.value = data
@@ -17,7 +18,12 @@ function handleFilter(filterObj) {
   api.getProducts({ filterObj }).then(({ items: data, pagination: paginationData }) => {
     items.value = data
     pagination.value = paginationData
+    filter.value = filterObj
   })
+}
+
+function handleChangePage(page) {
+  console.log(page)
 }
 </script>
 
@@ -39,7 +45,11 @@ function handleFilter(filterObj) {
           <CatalogItem v-for="item in items" :key="item.id" :item="item" />
         </ul>
 
-        <CatalogPagination v-if="pagination" :pagination="pagination" />
+        <CatalogPagination
+          v-if="pagination"
+          :pagination="pagination"
+          @change-page="handleChangePage"
+        />
       </section>
     </div>
   </main>
