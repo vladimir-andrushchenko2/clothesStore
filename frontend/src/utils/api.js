@@ -1,6 +1,7 @@
 import parseItem from '@/helpers/parseItem';
 import parseCartItem from '@/helpers/parseCartItem';
 import parseOrder from '@/helpers/parseOrder';
+import parseFilterDataInParamsString from '@/helpers/parseFilterDataInParamsString';
 
 const BASE_URL = 'https://vue-moire.skillbox.cc/api';
 
@@ -51,8 +52,11 @@ class Api {
     });
   }
 
-  getProducts() {
-    const path = '/products';
+  getProducts({ page = 1, filterObj = null } = {}) {
+    let path = `/products?page=${page}&limit=12`;
+    if (filterObj) {
+      path = `${path}&${parseFilterDataInParamsString(filterObj)}`
+    }
 
     return this.makeRequest({
       path,

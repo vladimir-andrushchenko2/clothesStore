@@ -4,7 +4,6 @@ import CatalogFilter from '@/components/CatalogFilter.vue'
 import CatalogPagination from '@/components/CatalogPagination.vue'
 import { ref } from 'vue'
 import api from '@/utils/api'
-import parseFilterData from '@/helpers/parseFilterDataInParamsString'
 
 const items = ref(null)
 
@@ -12,8 +11,10 @@ api.getProducts().then((data) => {
   items.value = data
 })
 
-function handleFilter(filterData) {
-  console.log(parseFilterData(filterData))
+function handleFilter(filterObj) {
+  api.getProducts({ filterObj }).then((data) => {
+    items.value = data
+  })
 }
 </script>
 
