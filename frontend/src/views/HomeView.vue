@@ -7,12 +7,12 @@ import api from '@/utils/api'
 
 const items = ref(null)
 
-api.getProducts().then((data) => {
+api.getProducts().then(({ items: data }) => {
   items.value = data
 })
 
 function handleFilter(filterObj) {
-  api.getProducts({ filterObj }).then((data) => {
+  api.getProducts({ filterObj }).then(({ items: data, pagination }) => {
     items.value = data
   })
 }

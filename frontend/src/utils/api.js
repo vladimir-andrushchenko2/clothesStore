@@ -60,7 +60,12 @@ class Api {
 
     return this.makeRequest({
       path,
-    }).then(({ items }) => items.map(parseItem));
+    }).then(({ items, pagination }) => {
+      return {
+        items: items.map(parseItem),
+        pagination
+      }
+    });
   }
 
   getProduct(id) {
