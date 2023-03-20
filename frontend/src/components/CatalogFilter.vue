@@ -30,6 +30,7 @@ function handleClear() {
   categoryId.value = null
   clearMaterialIds()
   clearSeasonIds()
+  emit('filter', null)
 }
 </script>
 

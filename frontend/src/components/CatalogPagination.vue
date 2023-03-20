@@ -2,7 +2,7 @@
 import IconArrowRight from './icons/IconArrowRight.vue'
 import IconArrowLeft from './icons/IconArrowLeft.vue'
 
-const props = defineProps({
+defineProps({
   pagination: {
     type: Object,
     required: true
