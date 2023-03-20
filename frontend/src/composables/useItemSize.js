@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 
 export default function useItemSize() {
+  // uses ref because used in computed furher
   const sizeOfItem = ref(null)
 
   function setSizeOfItem(value) {
