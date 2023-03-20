@@ -1,6 +1,18 @@
 <script setup>
 import IconArrowRight from './icons/IconArrowRight.vue'
 import IconArrowLeft from './icons/IconArrowLeft.vue'
+import { ref } from 'vue'
+
+const props = defineProps({
+  pagination: {
+    type: Object,
+    required: true
+  }
+})
+
+const currentPage = ref(props.pagination.page)
+
+const emit = defineEmits(['changePage'])
 </script>
 
 <template>
@@ -13,23 +25,10 @@ import IconArrowLeft from './icons/IconArrowLeft.vue'
         <IconArrowLeft />
       </a>
     </li>
-    <li class="pagination__item">
-      <a class="pagination__link pagination__link--current"> 1 </a>
-    </li>
-    <li class="pagination__item">
-      <a class="pagination__link" href="#"> 2 </a>
-    </li>
-    <li class="pagination__item">
-      <a class="pagination__link" href="#"> 3 </a>
-    </li>
-    <li class="pagination__item">
-      <a class="pagination__link" href="#"> 4 </a>
-    </li>
-    <li class="pagination__item">
-      <a class="pagination__link" href="#"> ... </a>
-    </li>
-    <li class="pagination__item">
-      <a class="pagination__link" href="#"> 10 </a>
+    <li v-for="page in pagination.pages" :key="page" class="pagination__item">
+      <a class="pagination__link" :class="{ 'pagination__link--current': page === currentPage }">
+        {{ page }}
+      </a>
     </li>
     <li class="pagination__item">
       <a class="pagination__link pagination__link--arrow" href="#" aria-label="Следующая страница">
@@ -38,3 +37,9 @@ import IconArrowLeft from './icons/IconArrowLeft.vue'
     </li>
   </ul>
 </template>
+
+<!-- "pagination": {
+  "page": 2,
+  "pages": 2,
+  "total": 14
+} -->

@@ -6,14 +6,17 @@ import { ref } from 'vue'
 import api from '@/utils/api'
 
 const items = ref(null)
+const pagination = ref(null)
 
-api.getProducts().then(({ items: data }) => {
+api.getProducts().then(({ items: data, pagination: paginationData }) => {
   items.value = data
+  pagination.value = paginationData
 })
 
 function handleFilter(filterObj) {
-  api.getProducts({ filterObj }).then(({ items: data, pagination }) => {
+  api.getProducts({ filterObj }).then(({ items: data, pagination: paginationData }) => {
     items.value = data
+    pagination.value = paginationData
   })
 }
 </script>
@@ -36,7 +39,7 @@ function handleFilter(filterObj) {
           <CatalogItem v-for="item in items" :key="item.id" :item="item" />
         </ul>
 
-        <CatalogPagination />
+        <CatalogPagination v-if="pagination" :pagination="pagination" />
       </section>
     </div>
   </main>
