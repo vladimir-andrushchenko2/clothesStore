@@ -23,5 +23,9 @@ export default function useSelect() {
     selected.value.clear()
   }
 
-  return [getSelected, select, isSelected, clear]
+  function isEmpty() {
+    return selected.value.size === 0
+  }
+
+  return [getSelected, select, isSelected, clear, isEmpty]
 }

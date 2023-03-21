@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineEmits } from 'vue'
+import { ref, defineEmits, computed } from 'vue'
 import useFetchFilterData from '@/composables/useFetchFilterData'
 import useSelect from '@/composables/useSelect'
 
@@ -7,12 +7,28 @@ const emit = defineEmits(['filter'])
 
 const { categories, materials, seasons } = useFetchFilterData()
 
-const [getSelectedMaterialsIds, selectMaterial, isMaterialIdSelected, clearMaterialIds] =
+const [
+  getSelectedMaterialsIds,
+  selectMaterial,
+  isMaterialIdSelected,
+  clearMaterialIds,
+  isMaterialsEmpty
+] = useSelect()
+const [getSelectedSeasonsIds, selectSeason, isSeasonIdSelected, clearSeasonIds, isSeasonsEmpty] =
   useSelect()
-const [getSelectedSeasonsIds, selectSeason, isSeasonIdSelected, clearSeasonIds] = useSelect()
 const categoryId = ref(null)
 const minPrice = ref(null)
 const maxPrice = ref(null)
+
+const isClearBtnShown = computed(() => {
+  return [
+    categoryId.value,
+    minPrice.value,
+    maxPrice.value,
+    !isMaterialsEmpty(),
+    !isSeasonsEmpty()
+  ].some((val) => val)
+})
 
 function handleSubmit() {
   emit('filter', {
@@ -106,7 +122,12 @@ function handleClear() {
       </fieldset>
 
       <button class="filter__submit button button--primery" type="submit">Применить</button>
-      <button @click="handleClear" class="filter__reset button button--second" type="button">
+      <button
+        v-if="isClearBtnShown"
+        @click="handleClear"
+        class="filter__reset button button--second"
+        type="button"
+      >
         Сбросить
       </button>
     </form>
