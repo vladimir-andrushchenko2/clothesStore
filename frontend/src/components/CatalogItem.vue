@@ -26,9 +26,9 @@ function handleColorChange(colorId) {
 
 <template>
   <li class="catalog__item">
-    <a class="catalog__pic" href="#">
+    <RouterLink class="catalog__pic" :to="`/item/${item.id}`">
       <img :src="computedCurrentImg" :alt="item.title" />
-    </a>
+    </RouterLink>
 
     <h3 class="catalog__title">
       <RouterLink :to="`/item/${item.id}`">{{ item.title }}</RouterLink>
