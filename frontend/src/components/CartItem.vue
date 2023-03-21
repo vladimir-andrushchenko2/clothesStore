@@ -29,6 +29,7 @@ const props = defineProps({
         <i :style="{ backgroundColor: cartItem.colorCode }"></i>
         {{ cartItem.colorTitle }}
       </span>
+      | Размер: {{ cartItem.sizeTitle }}
     </p>
     <span class="product__code"> Артикул: {{ cartItem.item.id }} </span>
 
