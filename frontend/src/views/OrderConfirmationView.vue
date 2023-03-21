@@ -19,10 +19,10 @@ api.getOrderConfirmation(route.params.id).then((orderData) => {
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link"> Каталог </a>
+          <RouterLink class="breadcrumbs__link" to="/"> Каталог </RouterLink>
         </li>
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link"> Корзина </a>
+          <RouterLink class="breadcrumbs__link" to="/cart"> Корзина </RouterLink>
         </li>
         <li class="breadcrumbs__item">
           <a class="breadcrumbs__link"> Оформление заказа </a>

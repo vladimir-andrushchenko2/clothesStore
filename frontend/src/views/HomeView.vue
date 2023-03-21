@@ -37,7 +37,7 @@ function handleChangePage(page) {
     <div class="content__top">
       <div class="content__row">
         <h1 class="content__title">Каталог</h1>
-        <span class="content__info"> 152 товара </span>
+        <span v-if="pagination" class="content__info"> {{ pagination.total }} товаров </span>
       </div>
     </div>
 

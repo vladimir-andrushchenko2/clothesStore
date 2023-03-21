@@ -2,6 +2,7 @@
 import CartItem from '@/components/CartItem.vue'
 import { useCartStore } from '@/stores/cart'
 import router from '@/router'
+import { RouterLink } from 'vue-router'
 
 const store = useCartStore()
 
@@ -16,7 +17,7 @@ function handleOrderBtnClick() {
       <div class="content__top">
         <ul class="breadcrumbs">
           <li class="breadcrumbs__item">
-            <a class="breadcrumbs__link" href="index.html"> Каталог </a>
+            <RouterLink class="breadcrumbs__link" to="/"> Каталог </RouterLink>
           </li>
           <li class="breadcrumbs__item">
             <a class="breadcrumbs__link"> Корзина </a>
