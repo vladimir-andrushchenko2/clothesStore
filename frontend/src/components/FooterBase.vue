@@ -2,7 +2,6 @@
 // import { RouterLink } from 'vue-router'
 
 import IconInsta from './icons/IconInsta.vue'
-import IconVk from './icons/IconVk.vue'
 import IconFb from './icons/IconFb.vue'
 import IconTw from './icons/IconTw.vue'
 import IconTg from './icons/IconTg.vue'
