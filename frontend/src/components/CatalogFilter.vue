@@ -54,22 +54,22 @@ function handleClear() {
   <aside class="filter">
     <form class="filter__form form" @submit.prevent="handleSubmit">
       <fieldset class="form__block">
-        <legend class="form__legend">Цена</legend>
+        <legend class="form__legend">Price</legend>
         <label class="form__label form__label--price">
           <input class="form__input" type="number" name="min-price" v-model.number="minPrice" />
-          <span class="form__value">От</span>
+          <span class="form__value">From</span>
         </label>
         <label class="form__label form__label--price">
           <input class="form__input" type="number" name="max-price" v-model.number="maxPrice" />
-          <span class="form__value">До</span>
+          <span class="form__value">To</span>
         </label>
       </fieldset>
 
       <fieldset v-if="categories" class="form__block">
-        <legend class="form__legend">Категория</legend>
+        <legend class="form__legend">Category</legend>
         <label class="form__label form__label--select">
           <select v-model="categoryId" class="form__select" name="category">
-            <option :value="null">Все категории</option>
+            <option :value="null">All categories</option>
             <option v-for="category in categories" :key="category.id" :value="category.id">
               {{ category.title }}
             </option>
@@ -78,7 +78,7 @@ function handleClear() {
       </fieldset>
 
       <fieldset v-if="materials" class="form__block">
-        <legend class="form__legend">Материал</legend>
+        <legend class="form__legend">Material</legend>
         <ul class="check-list">
           <li v-for="material in materials" :key="material.id" class="check-list__item">
             <label class="check-list__label">
@@ -100,7 +100,7 @@ function handleClear() {
       </fieldset>
 
       <fieldset v-if="seasons" class="form__block">
-        <legend class="form__legend">Коллекция</legend>
+        <legend class="form__legend">Collection</legend>
         <ul class="check-list">
           <li v-for="season in seasons" :key="season.id" class="check-list__item">
             <label class="check-list__label">
@@ -121,14 +121,14 @@ function handleClear() {
         </ul>
       </fieldset>
 
-      <button class="filter__submit button button--primery" type="submit">Применить</button>
+      <button class="filter__submit button button--primery" type="submit">Apply filter</button>
       <button
         v-if="isClearBtnShown"
         @click="handleClear"
         class="filter__reset button button--second"
         type="button"
       >
-        Сбросить
+        Reset
       </button>
     </form>
   </aside>

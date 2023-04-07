@@ -55,7 +55,7 @@ function handleQuantityChange(event) {
     <button
       @click="decrementItemCounter"
       type="button"
-      aria-label="Убрать один товар"
+      aria-label="remove one item"
       :disabled="quantityChangeIsLoading || isMinItemAmount"
     >
       <IconMinus />
@@ -72,7 +72,7 @@ function handleQuantityChange(event) {
     <button
       @click="incrementItemCounter"
       type="button"
-      aria-label="Добавить один товар"
+      aria-label="add one item"
       :disabled="quantityChangeIsLoading"
     >
       <IconPlus />

@@ -17,16 +17,16 @@ function handleOrderBtnClick() {
       <div class="content__top">
         <ul class="breadcrumbs">
           <li class="breadcrumbs__item">
-            <RouterLink class="breadcrumbs__link" to="/"> Каталог </RouterLink>
+            <RouterLink class="breadcrumbs__link" to="/"> Catalog </RouterLink>
           </li>
           <li class="breadcrumbs__item">
-            <a class="breadcrumbs__link"> Корзина </a>
+            <a class="breadcrumbs__link"> Cart </a>
           </li>
         </ul>
 
         <div class="content__row">
-          <h1 class="content__title">Корзина</h1>
-          <span class="content__info"> {{ store.sizeOfCart }} товара </span>
+          <h1 class="content__title">Cart</h1>
+          <span class="content__info"> {{ store.sizeOfCart }} items </span>
         </div>
       </div>
 
@@ -43,9 +43,9 @@ function handleOrderBtnClick() {
           </div>
 
           <div class="cart__block">
-            <p class="cart__desc">Мы&nbsp;посчитаем стоимость доставки на&nbsp;следующем этапе</p>
+            <p class="cart__desc">We will calculate delivery price at the next page</p>
             <p class="cart__price">
-              Итого: <span>{{ store.totalPrice }} ₽</span>
+              Total: <span>{{ store.totalPrice }} ₽</span>
             </p>
 
             <button
@@ -54,7 +54,7 @@ function handleOrderBtnClick() {
               :disabled="store.sizeOfCart === 0"
               @click="handleOrderBtnClick"
             >
-              Оформить заказ
+              Make an order
             </button>
           </div>
         </form>

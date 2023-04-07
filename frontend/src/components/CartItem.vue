@@ -24,14 +24,14 @@ const props = defineProps({
     </div>
     <h3 class="product__title">{{ cartItem.item.title }}</h3>
     <p class="product__info product__info--color">
-      Цвет:
+      Color:
       <span>
         <i :style="{ backgroundColor: cartItem.colorCode }"></i>
         {{ cartItem.colorTitle }}
       </span>
-      | Размер: {{ cartItem.sizeTitle }}
+      | Size: {{ cartItem.sizeTitle }}
     </p>
-    <span class="product__code"> Артикул: {{ cartItem.item.id }} </span>
+    <span class="product__code"> Item ID: {{ cartItem.item.id }} </span>
 
     <CartItemQuantity :quantity="cartItem.quantity" :basket-item-id="props.cartItem.basketItemId" />
 

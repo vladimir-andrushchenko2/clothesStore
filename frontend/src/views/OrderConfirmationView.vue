@@ -19,18 +19,18 @@ api.getOrderConfirmation(route.params.id).then((orderData) => {
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
-          <RouterLink class="breadcrumbs__link" to="/"> Каталог </RouterLink>
+          <RouterLink class="breadcrumbs__link" to="/"> Catalog </RouterLink>
         </li>
         <li class="breadcrumbs__item">
-          <RouterLink class="breadcrumbs__link" to="/cart"> Корзина </RouterLink>
+          <RouterLink class="breadcrumbs__link" to="/cart"> Cart </RouterLink>
         </li>
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link"> Оформление заказа </a>
+          <a class="breadcrumbs__link"> Make an order </a>
         </li>
       </ul>
 
       <h1 class="content__title">
-        Заказ оформлен <span>№ {{ order?.orderId }}</span>
+        Your order number <span>№ {{ order?.orderId }}</span>
       </h1>
     </div>
 
@@ -38,22 +38,21 @@ api.getOrderConfirmation(route.params.id).then((orderData) => {
       <form class="cart__form form">
         <div class="cart__field">
           <p class="cart__message">
-            Благодарим за&nbsp;выбор нашего магазина. На&nbsp;Вашу почту придет письмо
-            с&nbsp;деталями заказа. Наши менеджеры свяжутся с&nbsp;Вами в&nbsp;течение часа для
-            уточнения деталей доставки.
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit error pariatur
+            provident alias illum aliquam itaque, cumque aliquid? Quidem, nemo!
           </p>
 
           <ul class="dictionary">
             <li class="dictionary__item">
-              <span class="dictionary__key"> Получатель </span>
+              <span class="dictionary__key"> Client </span>
               <span class="dictionary__value"> {{ order.name }} </span>
             </li>
             <li class="dictionary__item">
-              <span class="dictionary__key"> Адрес доставки </span>
+              <span class="dictionary__key"> Address </span>
               <span class="dictionary__value"> {{ order.address }} </span>
             </li>
             <li class="dictionary__item">
-              <span class="dictionary__key"> Телефон </span>
+              <span class="dictionary__key"> Telephone </span>
               <span class="dictionary__value"> {{ order.phone }} </span>
             </li>
             <li class="dictionary__item">
@@ -61,7 +60,7 @@ api.getOrderConfirmation(route.params.id).then((orderData) => {
               <span class="dictionary__value"> {{ order.email }} </span>
             </li>
             <li class="dictionary__item">
-              <span class="dictionary__key"> Способ оплаты </span>
+              <span class="dictionary__key"> Payment type </span>
               <span class="dictionary__value"> {{ order.paymentType }} </span>
             </li>
           </ul>

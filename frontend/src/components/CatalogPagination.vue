@@ -23,7 +23,7 @@ function handlePageClick(page) {
         class="pagination__link pagination__link--arrow"
         :class="{ 'pagination__link--disabled': pagination.page === 1 }"
         @click.prevent="handlePageClick(pagination.page - 1)"
-        aria-label="Предыдущая страница"
+        aria-label="Previous page"
       >
         <IconArrowLeft />
       </a>
@@ -44,7 +44,7 @@ function handlePageClick(page) {
         class="pagination__link pagination__link--arrow"
         :class="{ 'pagination__link--disabled': pagination.page === pagination.pages }"
         href="#"
-        aria-label="Следующая страница"
+        aria-label="Next page"
       >
         <IconArrowRight />
       </a>

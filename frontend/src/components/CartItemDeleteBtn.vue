@@ -25,7 +25,7 @@ function handleClick() {
     @click="handleClick"
     class="product__del button-del"
     type="button"
-    aria-label="Удалить товар из корзины"
+    aria-label="Delete item from cart"
   >
     <IconClose />
   </button>

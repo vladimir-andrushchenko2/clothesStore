@@ -9,22 +9,17 @@ const store = useCartStore()
 <template>
   <header class="header container">
     <div class="header__wrapper">
-      <span class="header__info">Каталог</span>
+      <span class="header__info">Catalog</span>
 
       <RouterLink class="header__logo" to="/">
-        <img
-          src="@/assets/logo-moire.svg"
-          alt="Логотип интернет магазина Moire"
-          width="116"
-          height="34"
-        />
+        <img src="@/assets/logo-moire.svg" alt="Logo" width="116" height="34" />
       </RouterLink>
 
       <a class="header__tel" href="tel:8 800 600 90 09"> 8 800 600 90 09 </a>
 
-      <RouterLink class="header__cart" to="/cart" aria-label="Корзина с товарами">
+      <RouterLink class="header__cart" to="/cart" aria-label="Cart">
         <IconCart />
-        <span class="header__count" aria-label="Количество товаров">{{ store.sizeOfCart }}</span>
+        <span class="header__count" aria-label="Quantity">{{ store.sizeOfCart }}</span>
       </RouterLink>
     </div>
   </header>

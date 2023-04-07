@@ -26,16 +26,16 @@ defineProps({
     <li v-for="item in items" :key="item.item.id" class="cart__order">
       <h3>{{ item.item.title }} ({{ item.quantity }})</h3>
       <b>{{ item.item.price * item.quantity }} ₽</b>
-      <span>Артикул: {{ item.item.id }}</span>
+      <span>item ID: {{ item.item.id }}</span>
     </li>
   </ul>
 
   <div class="cart__total">
     <p>
-      Доставка: <b>{{ deliveryPrice }}</b>
+      Delivery price: <b>{{ deliveryPrice }}</b>
     </p>
     <p>
-      Итого: <b>{{ sizeOfCart }}</b> товара на сумму <b>{{ totalPrice }} ₽</b>
+      Total: <b>{{ sizeOfCart }}</b> items <b>{{ totalPrice }} $</b>
     </p>
   </div>
 </template>
