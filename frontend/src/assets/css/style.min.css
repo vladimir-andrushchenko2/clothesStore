@@ -292,7 +292,7 @@ a {
   margin-bottom: 25px;
 }
 .form__label--price::after {
-  content: '₽';
+  content: '$';
   position: absolute;
   top: 32px;
   right: 20px;

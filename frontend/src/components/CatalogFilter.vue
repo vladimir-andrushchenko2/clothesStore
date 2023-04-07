@@ -71,7 +71,7 @@ function handleClear() {
           <select v-model="categoryId" class="form__select" name="category">
             <option :value="null">All categories</option>
             <option v-for="category in categories" :key="category.id" :value="category.id">
-              {{ category.title }}
+              {{ category.slug }}
             </option>
           </select>
         </label>
@@ -91,7 +91,7 @@ function handleClear() {
                 :checked="isMaterialIdSelected(material.id)"
               />
               <span class="check-list__desc">
-                {{ material.title }}
+                {{ material.code }}
                 <span>({{ material.productsCount }})</span>
               </span>
             </label>
@@ -113,7 +113,7 @@ function handleClear() {
                 :checked="isSeasonIdSelected(season.id)"
               />
               <span class="check-list__desc">
-                {{ season.title }}
+                {{ season.code }}
                 <span>({{ season.productsCount }})</span>
               </span>
             </label>

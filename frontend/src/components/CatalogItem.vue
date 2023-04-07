@@ -31,10 +31,10 @@ function handleColorChange(colorId) {
     </RouterLink>
 
     <h3 class="catalog__title">
-      <RouterLink :to="`/item/${item.id}`">{{ item.title }}</RouterLink>
+      <RouterLink :to="`/item/${item.id}`">{{ item.slug }}</RouterLink>
     </h3>
 
-    <span class="catalog__price"> {{ item.price }} ₽ </span>
+    <span class="catalog__price"> {{ item.price }} $ </span>
 
     <ColorPalette
       @color-chande="(colorId) => handleColorChange(colorId)"

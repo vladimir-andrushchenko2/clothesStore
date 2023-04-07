@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import api from '@/utils/api'
 
-export default function useFetchItemViewData() {
+export default function useFetchFilterData() {
   const categories = ref(null)
   api.getProductCategories().then((items) => categories.value = items)
 
