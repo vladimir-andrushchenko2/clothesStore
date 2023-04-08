@@ -13,6 +13,7 @@ export default function parseOrder(order) {
     phone,
     paymentType,
     deliveryPrice: Number(deliveryType.price),
+    deliveryTypeId: deliveryType.id,
     items,
     quantity
   }

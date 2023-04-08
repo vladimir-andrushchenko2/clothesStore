@@ -6,6 +6,8 @@ import ColorPalette from './ColorPalette.vue'
 
 import getImgOfColor from '@/helpers/getImgColor'
 
+import { selectItemTitle } from '@/utils/selectors'
+
 const props = defineProps({
   item: {
     type: Object,
@@ -31,7 +33,7 @@ function handleColorChange(colorId) {
     </RouterLink>
 
     <h3 class="catalog__title">
-      <RouterLink :to="`/item/${item.id}`">{{ item.slug }}</RouterLink>
+      <RouterLink :to="`/item/${item.id}`">{{ selectItemTitle(item) }}</RouterLink>
     </h3>
 
     <span class="catalog__price"> {{ item.price }} $ </span>

@@ -18,7 +18,7 @@ import IconTg from './icons/IconTg.vue'
           <a class="footer__link" href="tel:88006009009"> 8 800 600 90 09 </a>
         </li>
         <li>
-          <a class="footer__link" href="mailto:hi@technozavrrr.com"> hi@technozavrrr.com </a>
+          <a class="footer__link" href="mailto:hi@technozavrrr.com"> lorem@ipsum.com </a>
         </li>
         <li>
           <a class="footer__link" href="#"> Discounts </a>

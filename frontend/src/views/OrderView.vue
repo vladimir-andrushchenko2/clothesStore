@@ -4,6 +4,7 @@ import { reactive, ref, computed, watch } from 'vue'
 import api from '@/utils/api'
 import router from '@/router'
 import OrderInfo from '@/components/OrderInfo.vue'
+import { selectPaymentOptionTitle, selectDeliveryOptionTitle } from '@/utils/selectors'
 
 const store = useCartStore()
 
@@ -106,9 +107,11 @@ function handleOrderSubmit() {
                 placeholder="Your name"
                 v-model.trim.lazy="form.name"
                 @input="error.name = ''"
+                required
+                minlength="2"
               />
               <span class="form__value">Name</span>
-              <span class="form__error">{{ error.name }}</span>
+              <!-- <span class="form__error">{{ error.name }}</span> -->
             </label>
 
             <label class="form__label">
@@ -119,9 +122,11 @@ function handleOrderSubmit() {
                 placeholder="Your address"
                 v-model.trim.lazy="form.address"
                 @input="error.address = ''"
+                required
+                minlength="2"
               />
               <span class="form__value">Address</span>
-              <span class="form__error">{{ error.address }}</span>
+              <!-- <span class="form__error">{{ error.address }}</span> -->
             </label>
 
             <label class="form__label">
@@ -129,12 +134,14 @@ function handleOrderSubmit() {
                 class="form__input"
                 type="tel"
                 name="phone"
-                placeholder="Your number"
+                placeholder="+ and ten digits (+1234567890)"
                 v-model.trim.lazy="form.phone"
                 @input="error.phone = ''"
+                required
+                minlength="11"
               />
               <span class="form__value">Telephone</span>
-              <span class="form__error">{{ error.phone }}</span>
+              <!-- <span class="form__error">{{ error.phone }}</span> -->
             </label>
 
             <label class="form__label">
@@ -145,9 +152,10 @@ function handleOrderSubmit() {
                 placeholder="Email"
                 v-model.trim.lazy="form.email"
                 @input="error.email = ''"
+                required
               />
               <span class="form__value">Email</span>
-              <span class="form__error">{{ error.email }}</span>
+              <!-- <span class="form__error">{{ error.email }}</span> -->
             </label>
 
             <label class="form__label">
@@ -174,7 +182,7 @@ function handleOrderSubmit() {
                     v-model.number="form.deliveryTypeId"
                   />
                   <span class="options__value">
-                    {{ delivery.title }} <b>{{ delivery.price }}</b>
+                    {{ selectDeliveryOptionTitle(delivery) }} <b>{{ delivery.price }}</b>
                   </span>
                 </label>
               </li>
@@ -191,7 +199,7 @@ function handleOrderSubmit() {
                     :value="payment.id"
                     v-model.number="form.paymentTypeId"
                   />
-                  <span class="options__value"> {{ payment.title }} </span>
+                  <span class="options__value"> {{ selectPaymentOptionTitle(payment) }} </span>
                 </label>
               </li>
             </ul>

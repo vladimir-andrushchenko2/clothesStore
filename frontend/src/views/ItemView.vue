@@ -9,6 +9,7 @@ import { useCartStore } from '@/stores/cart'
 import api from '@/utils/api'
 import useItemCounter from '@/composables/useItemCounter'
 import useItemSize from '@/composables/useItemSize'
+import { selectItemTitle, selectCategoryTitle } from '@/utils/selectors'
 
 const store = useCartStore()
 
@@ -52,10 +53,12 @@ function handleOrderSubmit() {
           <RouterLink class="breadcrumbs__link" to="/"> Catalog </RouterLink>
         </li>
         <li class="breadcrumbs__item">
-          <RouterLink class="breadcrumbs__link" to="/"> {{ item.category.title }} </RouterLink>
+          <RouterLink class="breadcrumbs__link" to="/">
+            {{ selectCategoryTitle(item.category) }}
+          </RouterLink>
         </li>
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link"> {{ item.title }} </a>
+          <a class="breadcrumbs__link"> {{ selectItemTitle(item) }} </a>
         </li>
       </ul>
     </div>
@@ -81,7 +84,7 @@ function handleOrderSubmit() {
 
       <div class="item__info">
         <span class="item__code">Item ID: {{ item.id }}</span>
-        <h2 class="item__title">{{ item.title }}</h2>
+        <h2 class="item__title">{{ selectItemTitle(item) }}</h2>
         <div class="item__form">
           <form class="form" @submit.prevent="handleOrderSubmit">
             <div class="item__row item__row--center">

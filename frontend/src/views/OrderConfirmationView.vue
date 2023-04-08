@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import api from '@/utils/api'
 import OrderInfo from '@/components/OrderInfo.vue'
 import getCartTotalPrice from '@/helpers/getCartTotalPrice'
+import { selectDeliveryOptionTitle } from '@/utils/selectors'
 
 const route = useRoute()
 
@@ -60,8 +61,10 @@ api.getOrderConfirmation(route.params.id).then((orderData) => {
               <span class="dictionary__value"> {{ order.email }} </span>
             </li>
             <li class="dictionary__item">
-              <span class="dictionary__key"> Payment type </span>
-              <span class="dictionary__value"> {{ order.paymentType }} </span>
+              <span class="dictionary__key"> Delivery </span>
+              <span class="dictionary__value">
+                {{ selectDeliveryOptionTitle({ id: order.deliveryTypeId }) }}
+              </span>
             </li>
           </ul>
         </div>

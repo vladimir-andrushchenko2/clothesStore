@@ -3,6 +3,7 @@ import CartItemQuantity from '@/components/CartItemQuantity.vue'
 import CartItemDeleteBtn from '@/components/CartItemDeleteBtn.vue'
 import { defineProps } from 'vue'
 import getImgOfColor from '@/helpers/getImgColor'
+import { selectItemTitle } from '@/utils/selectors'
 
 const props = defineProps({
   cartItem: {
@@ -22,7 +23,7 @@ const props = defineProps({
         :alt="cartItem.item.title"
       />
     </div>
-    <h3 class="product__title">{{ cartItem.item.title }}</h3>
+    <h3 class="product__title">{{ selectItemTitle(cartItem.item) }}</h3>
     <p class="product__info product__info--color">
       Color:
       <span>

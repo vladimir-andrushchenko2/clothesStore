@@ -2,6 +2,7 @@
 import { ref, defineEmits, computed } from 'vue'
 import useFetchFilterData from '@/composables/useFetchFilterData'
 import useSelect from '@/composables/useSelect'
+import { selectCategoryTitle } from '@/utils/selectors'
 
 const emit = defineEmits(['filter'])
 
@@ -71,7 +72,7 @@ function handleClear() {
           <select v-model="categoryId" class="form__select" name="category">
             <option :value="null">All categories</option>
             <option v-for="category in categories" :key="category.id" :value="category.id">
-              {{ category.slug }}
+              {{ selectCategoryTitle(category) }}
             </option>
           </select>
         </label>
